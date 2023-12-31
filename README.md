@@ -16,18 +16,18 @@ This adds a discounted section to any page inside shopify.
 
 ## Installation
 
-Provide instructions on how to install or set up your project. Include any dependencies that need to be installed.
+Just go to the sections directory inside your shopify admin panel and click on creation section and select liquid and give your file a meaningful name like discounted-product.js and paste the appropriate code from this file into that section file. And after that create or add all the assets files inside the assets directory.
 
 ## Usage
 
-Explain how to use your project, provide examples, and showcase any important functionality.
+after successful addition of this code you will be able to add a nice looking section to your page that will calculate from time from your input and add a nice time ticking clock with some custom messages and a product that you can select.
 
 ## Third-Party Libraries
 
 This project utilizes the following third-party library:
 
 - **Moment.js:** [Link to Moment.js](https://momentjs.com/)
-  - Brief description of how Moment.js is used in your project.
+  - moment.js is a good library for time with some nice localization features.
 
 ## Contributing
 
@@ -41,5 +41,5 @@ If you'd like to contribute to this project, please follow these guidelines.
 
 ## License
 
-This project is licensed under the [Your License Name] License - see the [LICENSE.md](LICENSE.md) file for details.
+This project is free to edit and free to use. No licensing.
 
