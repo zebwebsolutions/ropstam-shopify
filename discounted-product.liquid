@@ -1,0 +1,96 @@
+{% comment %}
+  Third Party Library: moment.js
+{% endcomment %}
+<script src="{{ 'moment.js' | asset_url }}" defer="defer"></script>
+<script src="{{ 'countdown.js' | asset_url }}" defer="defer"></script>
+{{ 'discounted-product.css' | asset_url | stylesheet_tag }}
+
+{% schema %}
+{
+  "name": "Discounted Product",
+  "settings": [
+    {
+      "type": "text",
+      "label": "Heading",
+      "id": "heading",
+      "default": "Exclusive Offer"
+    },
+    {
+      "type": "textarea",
+      "label": "Text",
+      "id": "text",
+      "default": "Limited time offer. Grab it now!"
+    },
+    {
+      "type": "product",
+      "label": "Select Product",
+      "id": "selected_product",
+      "info": "Select the product for the discount offer"
+    },
+    {
+      "type": "text",
+      "label": "Timer Label",
+      "id": "timer_label",
+      "default": "Hurry up, the offer ends in:"
+    },
+    {
+      "type": "text",
+      "label": "Timer Date",
+      "id": "timer_date",
+      "default": "2024-11-11 00:00:00",
+      "info": "Enter the timer date in the format: YYYY-MM-DD HH:mm:ss"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Discounted Product",
+      "category": "Custom"
+    }
+  ]
+}
+{% endschema %}
+
+<div class="discounted-product-section">
+  <div class="column column-with-bg" style="background: url('{{ 'discounted-product-bg.png' | asset_img_url: 'large' }}')">
+    <h2 class="dps-heading">{{ section.settings.heading | escape }}</h2>
+    <p class="dps-description">{{ section.settings.text | escape }}</p>
+  </div>
+
+  <div class="column product-info">
+    <div class="lhs">
+      {% if section.settings.selected_product != '' %}
+        {{ section.settings.selected_product | image_url: width: 200 | image_tag: class: 'discount-product', loading: 'lazy' }}
+      {% else %}
+        <p>No product selected</p>
+      {% endif %}
+    </div>
+    <div class="rhs">
+      {% if section.settings.selected_product != '' %}
+        <h3 class="dp-title">{{ section.settings.selected_product.title }}</h3>
+        <div class="dp-vendor">Vendor: <span>{{ section.settings.selected_product.vendor }}</span></div>
+        {% if section.settings.selected_product.collections.first %}
+          <div class="dp-category">Category: <span>{{ section.settings.selected_product.collections.first.title }}</span></div>
+        {% endif %}
+        {% if section.settings.selected_product.description %}
+          <p class="dp-description">{{ section.settings.selected_product.description }}</p>
+        {% endif %}
+        {% if section.settings.selected_product.variants.first %}
+          <div class="add-to-cart-btn">
+            <form action="/cart/add" method="post" enctype="multipart/form-data">
+              <input type="hidden" name="id" value="{{ section.settings.selected_product.variants.first.id }}" />
+              <input type="submit" value="Add to Cart" />
+            </form>
+          </div>
+        {% endif %}
+      {% endif %}
+    </div>
+  </div>
+
+
+  <div class="column timer-col">
+    <div id="countdown-timer" data-timer-date="{{ section.settings.timer_date }}"></div>
+    <p class="timer-msg">{{ section.settings.timer_label | escape }}</p>
+    <p class="dp-percentage">Get <span class="bigtext">20%</span> off</p>
+  </div>
+  
+</div>
